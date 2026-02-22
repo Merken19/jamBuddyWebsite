@@ -272,26 +272,10 @@ section {
   gap: 1.5rem;
 }
 
-.phone-mockup {
-  position: relative;
+.app-screenshot {
   max-width: 280px;
-}
-
-.phone-mockup .phone-frame {
-  width: 100%;
-  position: relative;
-  z-index: 2;
-}
-
-.phone-mockup .phone-screen {
-  position: absolute;
-  top: 3%;
-  left: 6%;
-  width: 88%;
-  height: 94%;
-  object-fit: cover;
-  border-radius: 24px;
-  z-index: 1;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
 }
 
 .mascot-img {
@@ -699,7 +683,7 @@ section {
     max-height: 220px;
   }
 
-  .phone-mockup {
+  .app-screenshot {
     max-width: 220px;
   }
 }
