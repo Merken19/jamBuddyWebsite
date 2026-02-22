@@ -273,8 +273,8 @@ section {
 }
 
 .app-screenshot {
-  max-width: 280px;
-  border-radius: 16px;
+  max-width: 140px;
+  border-radius: 12px;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
 }
 
@@ -684,7 +684,7 @@ section {
   }
 
   .app-screenshot {
-    max-width: 220px;
+    max-width: 120px;
   }
 }
 
