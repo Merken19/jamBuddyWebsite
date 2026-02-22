@@ -5,254 +5,163 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JamBuddy — Your Real-Time Musical Co-Pilot</title>
   <meta name="description" content="JamBuddy listens to what you play in real time and helps you understand chords, keys, scales, and progressions. Your musical co-pilot." />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ===== Navigation ===== -->
-  <nav class="nav">
-    <a href="#hero" class="nav-logo">JamBuddy</a>
-    <a href="#problem">Problem</a>
-    <a href="#whatif">What If</a>
-    <a href="#solution">Solution</a>
-    <a href="#forwho">For Who</a>
-    <a href="#features">Features</a>
-    <a href="#market">Market</a>
-    <a href="#competition">Competition</a>
-    <a href="#demo">Demo</a>
-    <a href="#thankyou">Contact</a>
-  </nav>
-
-  <!-- ===== Section 1: Hero ===== -->
-  <section class="hero" id="hero">
-    <div class="hero-meta">
-      <span>Project Pitch</span>
+  <div id="loading">
+    <div class="loading-inner">
+      <span class="loading-name">JamBuddy</span>
+      <span class="loading-text">Loading presentation…</span>
     </div>
+  </div>
 
-    <h1 class="hero-title">JamBuddy</h1>
-    <p class="hero-tagline">your real-time musical co-pilot</p>
+  <div id="slides"></div>
 
-    <div class="hero-images">
-      <img src="assets/images/guitarist.png" alt="Person playing electric guitar" class="guitarist" />
-      <img src="assets/images/fretboard.png" alt="JamBuddy fretboard visualization" class="fretboard" />
-    </div>
-  </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-  <!-- ===== Video Intro ===== -->
-  <section class="video-intro" id="video-intro">
-    <div class="section-inner">
-      <div class="youtube-embed">
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/Afwt6x60jWw"
-          title="JamBuddy App Demo"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-    </div>
-  </section>
+    const container = document.getElementById('slides');
+    const loading = document.getElementById('loading');
 
-  <!-- ===== Section 2: Problem ===== -->
-  <section class="problem" id="problem">
-    <div class="section-inner">
-      <div>
-        <h2 class="problem-heading">Problem</h2>
-      </div>
-      <div class="problem-points">
-        <p class="lead">You can practice. But are you improving?</p>
-        <p><span class="bullet-marker"></span>Tuners tell you pitch.</p>
-        <p><span class="bullet-marker"></span>Metronomes tell you timing.</p>
-        <p class="highlight">But nothing listens to what you're <em>actually playing</em> and responds in real time.</p>
-      </div>
-    </div>
-  </section>
+    pdfjsLib.getDocument('jamBuddypresentationstatic.pdf').promise.then(function(pdf) {
+      const total = pdf.numPages;
+      const wrappers = [];
 
-  <!-- ===== Section 3: What If ===== -->
-  <section class="whatif" id="whatif">
-    <div class="section-inner">
-      <div>
-        <h2 class="whatif-heading">What If..</h2>
-        <p class="whatif-subheading">your phone could hear music the way a musician does?</p>
-        <div class="whatif-body">
-          <p>Musicians don't have magical ears, but they have practice. They don't just hear sound &mdash; they hear a G minor chord resolving to a C major, a melody sitting in the Dorian mode, a rhythm pushing slightly ahead of the beat. That instant, intuitive analysis is what separates a trained ear.</p>
-          <p>JamBuddy brings the musician's ear to your pocket. Using real-time audio analysis, it listens the way a musician listens, and understands harmony and context as it happens.</p>
-        </div>
-      </div>
-      <div class="whatif-visual">
-        <img src="assets/images/app-screenshot.png" alt="JamBuddy app screenshot showing chord detection" class="app-screenshot" />
-        <img src="assets/images/mascot.gif" alt="JamBuddy mascot" class="mascot-img" />
-      </div>
-    </div>
-  </section>
+      // Pre-create all wrappers to preserve slide order
+      for (let i = 1; i <= total; i++) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'slide';
+        wrapper.id = 'slide-' + i;
+        const canvas = document.createElement('canvas');
+        wrapper.appendChild(canvas);
+        container.appendChild(wrapper);
+        wrappers.push({ wrapper, canvas });
+      }
 
-  <!-- ===== Section 4: Solution ===== -->
-  <section class="solution" id="solution">
-    <div class="section-inner">
-      <div>
-        <h2 class="solution-heading">JamBuddy &mdash; Visualise and understand the sounds from instruments.</h2>
-        <div class="solution-body">
-          <p>JamBuddy instantly tells you what you're playing &mdash; the chord, the key, the scale, the progression building under your fingers.</p>
-          <p>No setup, no music theory knowledge required. You pick up your guitar, you play, and JamBuddy keeps up. It's not a tuner, it's not a lesson &mdash; it's a practice companion that understands your music in real time, so you can focus on playing instead of analyzing.</p>
-        </div>
-      </div>
-      <div class="solution-media">
-        <video class="solution-video" autoplay muted loop playsinline>
-          <source src="assets/videos/LickCompressed.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <img src="assets/images/mascot-static.png" alt="JamBuddy mascot" class="solution-mascot" />
-      </div>
-    </div>
-  </section>
+      // Render each page
+      const renderPage = function(pageNum) {
+        return pdf.getPage(pageNum).then(function(page) {
+          const scale = 2;
+          const viewport = page.getViewport({ scale });
+          const { canvas } = wrappers[pageNum - 1];
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          return page.render({
+            canvasContext: canvas.getContext('2d'),
+            viewport
+          }).promise;
+        }).then(function() {
+          if (pageNum === 1) {
+            loading.classList.add('hidden');
+          }
+        });
+      };
 
-  <!-- ===== Section 5: For Who? ===== -->
-  <section class="forwho" id="forwho">
-    <div class="section-inner">
-      <div>
-        <h2 class="forwho-heading">For Who?</h2>
-        <div class="forwho-body">
-          <p>We live in the age of information. Every chord, every scale, every technique has a tutorial. Learning to play has never been more accessible &mdash; and yet, millions of musicians hit a wall.</p>
-          <p>They can hold the guitar. They can strum the chords. They've memorized a few songs. But they can't move forward.</p>
-          <p>JamBuddy is built for them &mdash; because for the first time, there's something on the other end that actually listens.</p>
-        </div>
-        <div class="forwho-callout">
-          Intermediates are the biggest group, while being the most overlooked.
-        </div>
-      </div>
-      <div>
-        <img src="assets/images/players-chart.png" alt="Chart showing instrument players by experience level — intermediates are the largest group" class="forwho-chart" />
-      </div>
-    </div>
-  </section>
+      // Render all pages (parallel but display in order due to pre-created slots)
+      const promises = [];
+      for (let i = 1; i <= total; i++) {
+        promises.push(renderPage(i));
+      }
+      return Promise.all(promises).then(addOverlays);
 
-  <!-- ===== Section 6: Features ===== -->
-  <section class="features" id="features">
-    <div class="section-inner">
-      <div>
-        <h2 class="features-heading">Ok, it listens,</h2>
-        <p class="features-subheading">Then what?</p>
-        <p class="features-body">Listening is just the beginning. JamBuddy takes what it hears and makes the invisible visible &mdash; the patterns, the harmonic connections, the relationships between notes that a trained musician feels intuitively but a learner can't yet see.</p>
+    }).catch(function(err) {
+      loading.innerHTML = '<div class="loading-inner"><span class="loading-name">JamBuddy</span><span class="loading-text">Could not load presentation.</span></div>';
+      console.error(err);
+    });
 
-        <div class="feature-list">
-          <div class="feature-item">
-            <span class="feature-label red">* focus ring</span>
-            <span class="feature-desc">Displays coherent chords together</span>
-          </div>
-          <div class="feature-item">
-            <span class="feature-label grey">* musical mode</span>
-            <span class="feature-desc">Hints the mood / emotion</span>
-          </div>
-          <div class="feature-item">
-            <span class="feature-label purple">* chord numerals</span>
-            <span class="feature-desc">Helps with progression creation</span>
-          </div>
-        </div>
-      </div>
-      <div class="features-visual">
-        <img src="assets/images/circle-of-fifths.png" alt="Circle of fifths with JamBuddy's focus ring highlighting related chords" />
-      </div>
-    </div>
-  </section>
+    function addOverlays() {
+      // Helper: create an absolutely-positioned overlay div
+      function makeOverlay(left, top, width, height) {
+        var el = document.createElement('div');
+        el.className = 'slide-overlay';
+        el.style.left = left;
+        el.style.top = top;
+        el.style.width = width;
+        el.style.height = height;
+        return el;
+      }
 
-  <!-- ===== Section 7: Market ===== -->
-  <section class="market" id="market">
-    <div class="section-inner">
-      <div>
-        <h2 class="market-heading">The Market</h2>
-        <div class="market-stats">
-          <p class="market-stat">Over a billion people have tried to learn an instrument. Most of them practiced alone.</p>
-          <p class="market-stat">The fortunate ones spend $50/hr on average for a lesson.</p>
-        </div>
-      </div>
-      <div>
-        <img src="assets/images/market-chart.png" alt="Global Online Music Education Market Size — $23.53B in 2026 growing to $101.39B by 2035" class="market-chart" />
-      </div>
-    </div>
-  </section>
+      // Helper: create a clickable link overlay
+      function makeLink(href, left, top, width, height) {
+        var a = document.createElement('a');
+        a.className = 'slide-overlay-link';
+        a.href = href;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.style.left = left;
+        a.style.top = top;
+        a.style.width = width;
+        a.style.height = height;
+        return a;
+      }
 
-  <!-- ===== Section 8: Competition ===== -->
-  <section class="competition" id="competition">
-    <div class="section-inner">
-      <h2 class="competition-heading">The Competition,</h2>
+      // Slide 3: Animated mascot GIF
+      var slide3 = document.getElementById('slide-3');
+      if (slide3) {
+        var gifOverlay = makeOverlay('2.34%', '45.93%', '20.83%', '46.30%');
+        var gif = document.createElement('img');
+        gif.src = 'assets/images/mascot.gif';
+        gif.alt = 'JamBuddy mascot';
+        gifOverlay.appendChild(gif);
+        slide3.appendChild(gifOverlay);
+      }
 
-      <div class="competition-grid">
-        <!-- Row 1 -->
-        <div class="comp-card">
-          <span class="comp-card-weakness">focuses on the beginner</span>
-          <p class="comp-card-counter">...is built primarily for the novice, while JamBuddy focuses on the intermediate.</p>
-        </div>
-        <div class="comp-card">
-          <span class="comp-card-weakness">detached from player</span>
-          <p class="comp-card-counter">...can't listen to you without an instructor, while JamBuddy can listen anytime.</p>
-        </div>
-        <div class="comp-card">
-          <span class="comp-card-weakness">forces memorization</span>
-          <p class="comp-card-counter">...can only make you listen, while JamBuddy teaches while letting you play.</p>
-        </div>
-        <!-- Row 2 -->
-        <div class="comp-card">
-          <span class="comp-card-weakness">slow to help</span>
-          <p class="comp-card-counter">...requires someone to respond for help, while JamBuddy is always available.</p>
-        </div>
-        <div class="comp-card">
-          <span class="comp-card-weakness">not fun</span>
-          <p class="comp-card-counter">...makes you stop to learn, while JamBuddy makes you play to learn.</p>
-        </div>
-        <div class="comp-card">
-          <span class="comp-card-weakness">too complicated</span>
-          <p class="comp-card-counter">...overwhelms with learning paths, while JamBuddy allows you to form it.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+      // Slide 4: Video + high-res mascot
+      var slide4 = document.getElementById('slide-4');
+      if (slide4) {
+        // Video overlay
+        var videoOverlay = makeOverlay('20.36%', '47.65%', '42.57%', '40.87%');
+        var video = document.createElement('video');
+        video.src = 'assets/videos/LickCompressed.mp4';
+        video.autoplay = true;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        videoOverlay.appendChild(video);
+        slide4.appendChild(videoOverlay);
 
-  <!-- ===== Section 9: More Info / Demo ===== -->
-  <section class="moreinfo" id="demo">
-    <div class="section-inner">
-      <h2 class="moreinfo-heading">More information</h2>
-      <p class="moreinfo-sub">and app demo below.</p>
+        // High-res mascot overlay
+        var mascotOverlay = makeOverlay('-6.71%', '29.26%', '17.08%', '44.14%');
+        mascotOverlay.style.transform = 'scaleX(-1)';
+        var mascot = document.createElement('img');
+        mascot.src = 'assets/images/mascot-static.png';
+        mascot.alt = 'JamBuddy mascot';
+        mascotOverlay.appendChild(mascot);
+        slide4.appendChild(mascotOverlay);
+      }
 
-      <a href="https://www.youtube.com/watch?v=Afwt6x60jWw" target="_blank" rel="noopener noreferrer" class="demo-link">
-        <img src="assets/images/youtube-icon.png" alt="YouTube" />
-        Watch the full app demo
-      </a>
+      // Slide 9: YouTube links
+      var slide9 = document.getElementById('slide-9');
+      if (slide9) {
+        var ytUrl = 'https://www.youtube.com/watch?v=Afwt6x60jWw';
+        slide9.appendChild(makeLink(ytUrl, '3.92%', '7.32%', '26.90%', '33.10%'));
+        slide9.appendChild(makeLink(ytUrl, '0%', '22.26%', '27.98%', '15.55%'));
+      }
 
-      <div class="youtube-embed">
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/Afwt6x60jWw"
-          title="JamBuddy App Demo"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Section 10: Thank You ===== -->
-  <section class="thankyou" id="thankyou">
-    <div class="section-inner">
-      <h2 class="thankyou-heading">Thank<br/>You</h2>
-
-      <img src="assets/images/portrait.png" alt="Mehmet Eren Erken" class="thankyou-portrait" />
-      <p class="thankyou-name">Mehmet Eren Erken</p>
-
-      <div class="thankyou-links">
-        <a href="https://merken19.github.io/jamBuddyWebsite/">merken19.github.io/jamBuddyWebsite/</a>
-        <a href="mailto:erenerken@hotmail.com.tr">erenerken@hotmail.com.tr</a>
-      </div>
-
-      <div class="credits">
-        <p>Thanks to Yigit for illustrations and general help &mdash; <a href="https://www.instagram.com/ycapkinn_art/" target="_blank" rel="noopener noreferrer">@ycapkinn_art</a></p>
-        <p>Thanks to Mert for mascots and general help &mdash; <a href="https://www.instagram.com/mcapkin_ink/" target="_blank" rel="noopener noreferrer">@mcapkin_ink</a></p>
-      </div>
-    </div>
-  </section>
+      // Slide 10: Website link (moved up) + Instagram credit links
+      var slide10 = document.getElementById('slide-10');
+      if (slide10) {
+        // Website link
+        slide10.appendChild(makeLink(
+          'https://merken19.github.io/jamBuddyWebsite/',
+          '52.08%', '72.40%', '42.86%', '3.54%'
+        ));
+        // @ycapkinn_art (illustrations) — top half of credits textbox
+        slide10.appendChild(makeLink(
+          'https://www.instagram.com/ycapkinn_art/',
+          '54.58%', '82.59%', '39.79%', '6.98%'
+        ));
+        // @mcapkin_ink (mascots) — bottom half of credits textbox
+        slide10.appendChild(makeLink(
+          'https://www.instagram.com/mcapkin_ink/',
+          '54.58%', '89.57%', '39.79%', '6.98%'
+        ));
+      }
+    }
+  </script>
 
 </body>
 </html>
