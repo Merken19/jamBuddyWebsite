@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(git branch:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)",
+      "Bash(python:*)",
+      "Bash(source:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(python3:*)",
+      "WebFetch(domain:merken19.github.io)"
+    ]
+  }
+}
