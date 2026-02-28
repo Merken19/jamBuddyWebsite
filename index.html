@@ -98,20 +98,30 @@
         return a;
       }
 
-      // Slide 3: Animated mascot GIF
-      var slide3 = document.getElementById('slide-3');
-      if (slide3) {
+      // Slide 2: Short Demo links
+      var slide2 = document.getElementById('slide-2');
+      if (slide2) {
+        var shortDemoUrl = 'https://www.youtube.com/watch?v=vJY_9Q5pWR4';
+        // Large rectangle overlay
+        slide2.appendChild(makeLink(shortDemoUrl, '14.6%', '17.4%', '68.8%', '60.7%'));
+        // YouTube thumbnail
+        slide2.appendChild(makeLink(shortDemoUrl, '39.1%', '33.7%', '21.8%', '26.8%'));
+      }
+
+      // Slide 4: Animated mascot GIF (was slide 3)
+      var slide4 = document.getElementById('slide-4');
+      if (slide4) {
         var gifOverlay = makeOverlay('2.34%', '45.93%', '20.83%', '46.30%');
         var gif = document.createElement('img');
         gif.src = 'assets/images/mascot.gif';
         gif.alt = 'JamBuddy mascot';
         gifOverlay.appendChild(gif);
-        slide3.appendChild(gifOverlay);
+        slide4.appendChild(gifOverlay);
       }
 
-      // Slide 4: Video + high-res mascot
-      var slide4 = document.getElementById('slide-4');
-      if (slide4) {
+      // Slide 5: Video + high-res mascot (was slide 4)
+      var slide5 = document.getElementById('slide-5');
+      if (slide5) {
         // Video overlay
         var videoOverlay = makeOverlay('20.36%', '47.65%', '42.57%', '40.87%');
         var video = document.createElement('video');
@@ -121,7 +131,7 @@
         video.loop = true;
         video.playsInline = true;
         videoOverlay.appendChild(video);
-        slide4.appendChild(videoOverlay);
+        slide5.appendChild(videoOverlay);
 
         // High-res mascot overlay
         var mascotOverlay = makeOverlay('-6.71%', '29.26%', '17.08%', '44.14%');
@@ -130,32 +140,32 @@
         mascot.src = 'assets/images/mascot-static.png';
         mascot.alt = 'JamBuddy mascot';
         mascotOverlay.appendChild(mascot);
-        slide4.appendChild(mascotOverlay);
+        slide5.appendChild(mascotOverlay);
       }
 
-      // Slide 9: YouTube links
-      var slide9 = document.getElementById('slide-9');
-      if (slide9) {
-        var ytUrl = 'https://www.youtube.com/watch?v=Afwt6x60jWw';
-        slide9.appendChild(makeLink(ytUrl, '3.92%', '7.32%', '26.90%', '33.10%'));
-        slide9.appendChild(makeLink(ytUrl, '0%', '22.26%', '27.98%', '15.55%'));
-      }
-
-      // Slide 10: Website link (moved up) + Instagram credit links
+      // Slide 10: YouTube links (was slide 9)
       var slide10 = document.getElementById('slide-10');
       if (slide10) {
+        var ytUrl = 'https://www.youtube.com/watch?v=Afwt6x60jWw';
+        slide10.appendChild(makeLink(ytUrl, '3.92%', '7.32%', '26.90%', '33.10%'));
+        slide10.appendChild(makeLink(ytUrl, '0%', '22.26%', '27.98%', '15.55%'));
+      }
+
+      // Slide 11: Website link + Instagram credit links (was slide 10)
+      var slide11 = document.getElementById('slide-11');
+      if (slide11) {
         // Website link
-        slide10.appendChild(makeLink(
+        slide11.appendChild(makeLink(
           'https://merken19.github.io/jamBuddyWebsite/',
           '52.08%', '72.40%', '42.86%', '3.54%'
         ));
         // @ycapkinn_art (illustrations) — top half of credits textbox
-        slide10.appendChild(makeLink(
+        slide11.appendChild(makeLink(
           'https://www.instagram.com/ycapkinn_art/',
           '54.58%', '82.59%', '39.79%', '6.98%'
         ));
         // @mcapkin_ink (mascots) — bottom half of credits textbox
-        slide10.appendChild(makeLink(
+        slide11.appendChild(makeLink(
           'https://www.instagram.com/mcapkin_ink/',
           '54.58%', '89.57%', '39.79%', '6.98%'
         ));
